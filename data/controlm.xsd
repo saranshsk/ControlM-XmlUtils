@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:element name="DEFTABLE" type="DEFTABLEType"/>
+  
+  <xsd:complexType name="DEFTABLEType">
+    <xsd:sequence>
+      <xsd:element type="TABLEType" name="TABLE" maxOccurs="unbounded" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="TABLEType">
+    <xsd:sequence>
+      <xsd:element type="JOBType" name="JOB" maxOccurs="unbounded" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute type="xsd:string" name="DATACENTER"      use="optional"/>
+    <xsd:attribute type="xsd:string" name="TABLE_NAME"      use="optional"/>
+    <xsd:attribute type="xsd:byte"   name="USED_BY_CODE"    use="optional"/>
+    <xsd:attribute type="xsd:string" name="TABLE_USERDAILY" use="optional"/>
+  </xsd:complexType>
+
+  
+  <xsd:complexType name="JOBType">
+    <xsd:sequence>
+      <xsd:element type="INCONDType" name="INCOND" maxOccurs="unbounded" minOccurs="0"/>
+      <xsd:element type="QUANTITATIVEType" name="QUANTITATIVE" maxOccurs="unbounded" minOccurs="0"/>
+      <xsd:element type="OUTCONDType" name="OUTCOND" maxOccurs="unbounded" minOccurs="0"/>
+      <xsd:element type="AUTOEDIT2Type" name="AUTOEDIT2" maxOccurs="unbounded" minOccurs="0"/>
+      <xsd:element type="SHOUTType" name="SHOUT" maxOccurs="unbounded" minOccurs="0"/>
+      <xsd:element type="ONType" name="ON" maxOccurs="unbounded" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute type="xsd:byte" name="JAN" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="FEB" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="MAR" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="APR" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="MAY" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="JUN" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="JUL" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="AUG" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="SEP" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="OCT" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="NOV" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="DEC" use="optional"/>
+    <xsd:attribute type="xsd:string" name="APPLICATION" use="optional"/>
+    <xsd:attribute type="xsd:string" name="APPL_FORM" use="optional"/>
+    <xsd:attribute type="xsd:string" name="APPL_TYPE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="APPL_VER" use="optional"/>
+    <xsd:attribute type="xsd:string" name="AUTHOR" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="AUTOARCH" use="optional"/>
+    <xsd:attribute type="xsd:int" name="CHANGE_DATE" use="optional"/>
+    <xsd:attribute type="xsd:int" name="CHANGE_TIME" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CHANGE_USERID" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CM_VER" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="CONFIRM" use="optional"/>
+    <xsd:attribute type="xsd:int" name="CREATION_DATE" use="optional"/>
+    <xsd:attribute type="xsd:int" name="CREATION_TIME" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CREATION_USER" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="CRITICAL" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="CYCLIC" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CYCLIC_INTERVAL_SEQUENCE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CYCLIC_TYPE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="DAYS_AND_OR" use="optional"/>
+    <xsd:attribute type="xsd:string" name="DESCRIPTION" use="optional"/>
+    <xsd:attribute type="xsd:string" name="GROUP" use="optional"/>
+    <xsd:attribute type="xsd:string" name="IND_CYCLIC" use="optional"/>
+    <xsd:attribute type="xsd:string" name="INTERVAL" use="optional"/>
+    <xsd:attribute type="xsd:string" name="JOBNAME" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="MAXDAYS" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="MAXRERUN" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="MAXRUNS" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="MAXWAIT" use="optional"/>
+    <xsd:attribute type="xsd:string" name="MEMLIB" use="optional"/>
+    <xsd:attribute type="xsd:string" name="MEMNAME" use="optional"/>
+    <xsd:attribute type="xsd:string" name="MULTY_AGENT" use="optional"/>
+    <xsd:attribute type="xsd:string" name="NODEID" use="optional"/>
+    <xsd:attribute type="xsd:string" name="OWNER" use="optional"/>
+    <xsd:attribute type="xsd:string" name="PARENT_TABLE" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="RETRO" use="optional"/>
+    <xsd:attribute type="xsd:string" name="RULE_BASED_CALENDAR_RELATIONSHIP" use="optional"/>
+    <xsd:attribute type="xsd:string" name="SHIFT" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="SHIFTNUM" use="optional"/>
+    <xsd:attribute type="xsd:byte" name="SYSDB" use="optional"/>
+    <xsd:attribute type="xsd:string" name="TASKTYPE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="USE_INSTREAM_JCL" use="optional"/>
+    <xsd:attribute type="xsd:string" name="WEEKDAYS" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CMDLINE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="DAYSCAL" use="optional"/>
+    <xsd:attribute type="xsd:string" name="WEEKSCAL" use="optional"/>
+    <xsd:attribute type="xsd:short" name="TIMEFROM" use="optional"/>
+    <xsd:attribute type="xsd:string" name="TIMETO" use="optional"/>
+    <xsd:attribute type="xsd:string" name="CONFCAL" use="optional"/>
+    <xsd:attribute type="xsd:int" name="ACTIVE_FROM" use="optional"/>
+    <xsd:attribute type="xsd:string" name="DAYS" use="optional"/>
+    <xsd:attribute type="xsd:short" name="DATE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="PRIORITY" use="optional"/>
+  </xsd:complexType>
+ 
+
+
+  <xsd:complexType name="INCONDType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="AND_OR" use="optional"/>
+        <xsd:attribute type="xsd:string" name="NAME" use="optional"/>
+        <xsd:attribute type="xsd:string" name="ODATE" use="optional"/>
+        <xsd:attribute type="xsd:string" name="OP" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="QUANTITATIVEType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="NAME" use="optional"/>
+        <xsd:attribute type="xsd:byte" name="QUANT" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="OUTCONDType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="NAME" use="optional"/>
+        <xsd:attribute type="xsd:string" name="ODATE" use="optional"/>
+        <xsd:attribute type="xsd:string" name="SIGN" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="AUTOEDIT2Type">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="NAME" use="optional"/>
+        <xsd:attribute type="xsd:string" name="VALUE" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="DOType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="ACTION" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="ONType">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element type="DOMAILType" name="DOMAIL"/>
+      <xsd:element type="DOType" name="DO"/>
+      <xsd:element type="DOCONDType" name="DOCOND"/>
+      <xsd:element type="DOREMEDYType" name="DOREMEDY"/>
+    </xsd:choice>
+    <xsd:attribute type="xsd:string" name="CODE" use="optional"/>
+    <xsd:attribute type="xsd:string" name="STMT" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="DOCONDType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="NAME" use="optional"/>
+        <xsd:attribute type="xsd:string" name="ODATE" use="optional"/>
+        <xsd:attribute type="xsd:string" name="SIGN" use="optional"/>
+        <xsd:attribute type="xsd:string" name="ACTION" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="DOMAILType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="ATTACH_SYSOUT" use="optional"/>
+        <xsd:attribute type="xsd:string" name="DEST" use="optional"/>
+        <xsd:attribute type="xsd:string" name="MESSAGE" use="optional"/>
+        <xsd:attribute type="xsd:string" name="SUBJECT" use="optional"/>
+        <xsd:attribute type="xsd:string" name="URGENCY" use="optional"/>
+        <xsd:attribute type="xsd:string" name="CC_DEST" use="optional"/>
+        <xsd:attribute type="xsd:string" name="ACTION" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="SHOUTType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="DEST" use="optional"/>
+        <xsd:attribute type="xsd:string" name="MESSAGE" use="optional"/>
+        <xsd:attribute type="xsd:short" name="TIME" use="optional"/>
+        <xsd:attribute type="xsd:string" name="URGENCY" use="optional"/>
+        <xsd:attribute type="xsd:string" name="WHEN" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="DOREMEDYType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute type="xsd:string" name="DESCRIPTION" use="optional"/>
+        <xsd:attribute type="xsd:string" name="SUMMARY" use="optional"/>
+        <xsd:attribute type="xsd:string" name="URGENCY" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+</xsd:schema>
