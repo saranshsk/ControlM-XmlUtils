@@ -6,7 +6,7 @@
 //
 
 
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,16 +16,15 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for AUTOEDIT2Type complex type.
+ * <p>Java class for DOType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="AUTOEDIT2Type">
+ * &lt;complexType name="DOType">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="NAME" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="VALUE" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="ACTION" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/extension>
  *   &lt;/simpleContent>
  * &lt;/complexType>
@@ -34,17 +33,15 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AUTOEDIT2Type", propOrder = {
+@XmlType(name = "DOType", propOrder = {
     "value"
 })
-public class AUTOEDIT2Type {
+public class DOType {
 
     @XmlValue
     protected String value;
-    @XmlAttribute(name = "NAME")
-    protected String name;
-    @XmlAttribute(name = "VALUE")
-    protected String valueAttribute;
+    @XmlAttribute(name = "ACTION")
+    protected String action;
 
     /**
      * Gets the value of the value property.
@@ -71,51 +68,27 @@ public class AUTOEDIT2Type {
     }
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the action property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNAME() {
-        return name;
+    public String getACTION() {
+        return action;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the action property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNAME(String value) {
-        this.name = value;
-    }
-
-    /**
-     * Gets the value of the valueAttribute property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValueAttribute() {
-        return valueAttribute;
-    }
-
-    /**
-     * Sets the value of the valueAttribute property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setValueAttribute(String value) {
-        this.valueAttribute = value;
+    public void setACTION(String value) {
+        this.action = value;
     }
 
 }

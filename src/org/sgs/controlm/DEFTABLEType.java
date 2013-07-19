@@ -5,7 +5,7 @@
 // Generated on: 2013.07.18 at 05:12:25 PM MST 
 //
 
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import java.util.ArrayList;
 import java.util.List;

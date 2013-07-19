@@ -6,7 +6,7 @@
 //
 
 
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,15 +16,16 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for DOType complex type.
+ * <p>Java class for QUANTITATIVEType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="DOType">
+ * &lt;complexType name="QUANTITATIVEType">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="ACTION" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="NAME" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="QUANT" type="{http://www.w3.org/2001/XMLSchema}byte" />
  *     &lt;/extension>
  *   &lt;/simpleContent>
  * &lt;/complexType>
@@ -33,15 +34,17 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DOType", propOrder = {
+@XmlType(name = "QUANTITATIVEType", propOrder = {
     "value"
 })
-public class DOType {
+public class QUANTITATIVEType {
 
     @XmlValue
     protected String value;
-    @XmlAttribute(name = "ACTION")
-    protected String action;
+    @XmlAttribute(name = "NAME")
+    protected String name;
+    @XmlAttribute(name = "QUANT")
+    protected Byte quant;
 
     /**
      * Gets the value of the value property.
@@ -68,27 +71,51 @@ public class DOType {
     }
 
     /**
-     * Gets the value of the action property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getACTION() {
-        return action;
+    public String getNAME() {
+        return name;
     }
 
     /**
-     * Sets the value of the action property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setACTION(String value) {
-        this.action = value;
+    public void setNAME(String value) {
+        this.name = value;
+    }
+
+    /**
+     * Gets the value of the quant property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Byte }
+     *     
+     */
+    public Byte getQUANT() {
+        return quant;
+    }
+
+    /**
+     * Sets the value of the quant property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Byte }
+     *     
+     */
+    public void setQUANT(Byte value) {
+        this.quant = value;
     }
 
 }

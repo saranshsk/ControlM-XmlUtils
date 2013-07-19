@@ -6,7 +6,7 @@
 //
 
 
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

@@ -6,7 +6,7 @@
 //
 
 
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import java.io.File;
 import javax.xml.bind.JAXBContext;

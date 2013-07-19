@@ -6,7 +6,7 @@
 //
 
 
-package org.sgs.sandbox.controlm;
+package org.sgs.controlm;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for QUANTITATIVEType complex type.
+ * <p>Java class for AUTOEDIT2Type complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="QUANTITATIVEType">
+ * &lt;complexType name="AUTOEDIT2Type">
  *   &lt;simpleContent>
  *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *       &lt;attribute name="NAME" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="QUANT" type="{http://www.w3.org/2001/XMLSchema}byte" />
+ *       &lt;attribute name="VALUE" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/extension>
  *   &lt;/simpleContent>
  * &lt;/complexType>
@@ -34,17 +34,17 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QUANTITATIVEType", propOrder = {
+@XmlType(name = "AUTOEDIT2Type", propOrder = {
     "value"
 })
-public class QUANTITATIVEType {
+public class AUTOEDIT2Type {
 
     @XmlValue
     protected String value;
     @XmlAttribute(name = "NAME")
     protected String name;
-    @XmlAttribute(name = "QUANT")
-    protected Byte quant;
+    @XmlAttribute(name = "VALUE")
+    protected String valueAttribute;
 
     /**
      * Gets the value of the value property.
@@ -95,27 +95,27 @@ public class QUANTITATIVEType {
     }
 
     /**
-     * Gets the value of the quant property.
+     * Gets the value of the valueAttribute property.
      * 
      * @return
      *     possible object is
-     *     {@link Byte }
+     *     {@link String }
      *     
      */
-    public Byte getQUANT() {
-        return quant;
+    public String getValueAttribute() {
+        return valueAttribute;
     }
 
     /**
-     * Sets the value of the quant property.
+     * Sets the value of the valueAttribute property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Byte }
+     *     {@link String }
      *     
      */
-    public void setQUANT(Byte value) {
-        this.quant = value;
+    public void setValueAttribute(String value) {
+        this.valueAttribute = value;
     }
 
 }
