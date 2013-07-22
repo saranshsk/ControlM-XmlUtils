@@ -2,6 +2,7 @@ package org.sgs.controlm;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,8 +22,14 @@ import org.apache.commons.io.FileUtils;
  */
 public class XmlDriver{
 	
+	
 	// Default xml
 	private static final String INPUT_XML_FILE = "data/controlm.xml";
+	private static final Set<String> MUTT_ARTIFACTS;
+	static{
+		MUTT_ARTIFACTS = new LinkedHashSet<String>();
+		MUTT_ARTIFACTS.add("-c ");
+	}
 	
 	// Hydrated POJO from XML file
 	private DEFTABLEType tables;
@@ -144,7 +151,7 @@ public class XmlDriver{
     		System.out.printf("-------------------------------------------------\n");
     		System.out.printf("%s\n", name);
     		for(String email : emails){
-    			System.out.printf("%s\n", email);
+    			System.out.printf("\t%s\n", email);
     		}
     	}
     	
