@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -70,7 +71,7 @@ public class XmlDriver{
 			if(name.equals(token)){
 				name = name.replace("%%", "");
 				name = job.getJOBNAME() + "_" + name;
-				String email = editType.getValue().toLowerCase();
+				String email = editType.getValueAttribute().trim().toLowerCase();
 				return new Pair<String, String>(name, email);
 			}
 		}
@@ -106,7 +107,15 @@ public class XmlDriver{
                             emailString = emailString.replaceAll(" ", "");
                             String[] emails = emailString.split(";");
                             for(String email : emails){
-                            	Pair<String, String> pair = getTokenEmailPair(email, job);
+                            	
+                            	Pair<String, String> pair;
+								try {
+									pair = getTokenEmailPair(email, job);
+								} catch (RuntimeException e) {
+									System.err.printf("%s\n", e);
+									continue;
+								}
+                            	
                             	String token = pair.getFirst();
                             	String processedEmail = pair.getSecond();
                             	Set<String> testSet = tokenToEmailsMap.get(pair.getFirst());
@@ -121,15 +130,24 @@ public class XmlDriver{
                 }// for onCondition
             }//for job
             
-            return getEmailMap();
+            return tokenToEmailsMap;
 
 	}
 	
     public static void main(final String[] args){
     	
     	XmlDriver driver = new XmlDriver();
-
-
+    	Map<String, Set<String>> emailMap = driver.getEmailMap();
+    	for(Entry<String, Set<String>> entry : emailMap.entrySet()){
+    		String name = entry.getKey();
+    		Set<String> emails = entry.getValue();
+    		System.out.printf("-------------------------------------------------\n");
+    		System.out.printf("%s\n", name);
+    		for(String email : emails){
+    			System.out.printf("%s\n", email);
+    		}
+    	}
+    	
 
     }
 }
