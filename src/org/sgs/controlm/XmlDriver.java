@@ -200,26 +200,42 @@ public class XmlDriver{
 	public static void printAllJobEmails(){
 		XmlDriver driver = new XmlDriver();
 		Set<CmJobEmailDetails> emailDetails = driver.getEmailDetails();
+		
+		// Control stdout reporting, only print if there is non-zero info available.
+		// Also, keep counts to report on stats.
+		int successCount = 0;
+		int failureCount = 0;
+		int totalJobCount = 0;
+		int bothEmailTypeCount = 0;
+		
     	for(CmJobEmailDetails detail : emailDetails){
     		
-    		int successCount = detail.getJobSuccessEmails().size();
-    		int failureCount = detail.getJobFailureEmails().size();
-    		if(successCount + failureCount < 1) {
+    		// For stat purposes, we only care that a job sends email,
+    		// we don't care about how many recipients there are, so
+    		// just increment counters by 1.
+    		int tmpSuccess = (detail.getJobSuccessEmails().size() > 0 ? 1 : 0);
+    		int tmpFailure = (detail.getJobFailureEmails().size() > 0 ? 1 : 0);
+    		bothEmailTypeCount += (((tmpSuccess + tmpFailure) == 2) ? 1 : 0);
+    		successCount += tmpSuccess;
+    		failureCount += tmpFailure;
+    		
+    		if(tmpSuccess + tmpFailure < 1) {
     			continue;
     		}
+    		totalJobCount++;
     		
     		System.out.printf("-------------------------------------------------\n");
     		System.out.printf("%s\n", detail.getCmName());
     		
     		
-    		if (successCount > 0) {
+    		if (tmpSuccess > 0) {
 				System.out.printf("  %s --------------------------------------\n", Status.OK);
 				for (String email : detail.getJobSuccessEmails()) {
 					System.out.printf("\t%s\n", email);
 				}
 			}
     		
-			if (failureCount > 0) {
+			if (tmpFailure > 0) {
 				System.out.printf("  %s -----------------------------------\n", Status.NOTOK);
 				for (String email : detail.getJobFailureEmails()) {
 					System.out.printf("\t%s\n", email);
@@ -227,6 +243,14 @@ public class XmlDriver{
 			}
 			
     	}//for
+    	
+    	// Report email counts
+		System.out.printf("-------------------------------------------------\n");
+		System.out.printf("Summary\n");
+		System.out.printf("Total number jobs w/ any email:      %3d\n", totalJobCount);
+		System.out.printf("Total number jobs w/ success emails: %3d\n", successCount);
+		System.out.printf("Total number jobs w/ failure emails: %3d\n", failureCount);
+		System.out.printf("Total number jobs w/ both emails:    %3d\n", bothEmailTypeCount);
 	}
 	
 	
