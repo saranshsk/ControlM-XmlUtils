@@ -4,10 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.xml.bind.JAXBContext;
@@ -78,103 +75,94 @@ public class XmlDriver{
 	}
 	
 	
-	private Set<String> scrubEmailString(String emailString){
-		
-		Set<String> emailSet = new TreeSet<String>();
-		
-		String[] emails = emailString.split(DELIMITER);
-		for (String email : emails) {
-			email = email.trim();
-			email = email.toLowerCase();
-			for (String artifact : EMAIL_ARTIFACTS) {
-				email = email.replaceAll(artifact, "");
-			}
-			emailSet.add(email);
+	private String scrubEmailString(String email) {
+		email = email.trim();
+		email = email.toLowerCase();
+		for (String artifact : EMAIL_ARTIFACTS) {
+			email = email.replaceAll(artifact, "");
 		}
-		return emailSet;
+		return email;
 	}
 	
 	
 	private boolean isToken(String testString){
 		return testString.startsWith(TOKEN_CHARS);
 	}
+
 	
-	private boolean containsToken(String testString){
-		return testString.contains(TOKEN_CHARS);
-	}
-	
-	private Set<String> getEmailsForToken(String destString, JOBType job) {
-		for (AUTOEDIT2Type editType : job.getAUTOEDIT2()) {
+	private String getEmailForToken(String token, List<AUTOEDIT2Type> autoEditTypeList) {
+		for (AUTOEDIT2Type editType : autoEditTypeList) {
 			String name = editType.getNAME();
-			if (name.equals(destString)) {
+			if (name.equals(token)) {
 				String emailString = editType.getValueAttribute();
 				return scrubEmailString(emailString);
 			}
 		}
-		throw new RuntimeException(String.format("Could not find email for token '%s' in the job '%s'.", destString, job.getJOBNAME()));
+		throw new RuntimeException(String.format("Could not find email for token '%s'.", token));
 	}
 	
 	
-	
-	private void addEntriesForDoMail(JOBType job, DOMAILType doMail, Map<String, Set<String>> nameToEmailsMap){
-		
-		// This could be a token, one email, a delimited list of emails
-		String destString = doMail.getDEST();
-		
-		// These will be converted/added as entries to the passed in nameToEmailsMap
-		String name = null;
-		Set<String> emailSet = null;
-		
-		if(containsToken(destString)){
-			// This is a Control-M token, change name to show what the purpose of
-			// this token is, and convert the tokens into their corresponding 
-			// right-side values from the xml "AUTOEDIT2" element's @value attr
-			name = job.getJOBNAME() + "_" + destString.replaceAll(TOKEN_CHARS, "");
-			emailSet = getEmailsForToken(destString, job);
-		}else{
-			// This is not a token, so we can use the job name for this
-			// entry, and scrub the address(es) for artifacts
-			name = job.getJOBNAME();
-			emailSet = scrubEmailString(destString);
+	private Set<String> convertDoMailsToEmails(List<DOMAILType> doMailList, List<AUTOEDIT2Type> autoEditTypeList) {
+		Set<String> emailSet = new TreeSet<String>();
+		for(DOMAILType doMail : doMailList) {
+			String destString = doMail.getDEST();
+			for(String dest : destString.split(DELIMITER)) {
+				if(isToken(dest)) {
+					dest = getEmailForToken(dest, autoEditTypeList);
+				}else {
+					dest = scrubEmailString(dest);
+				}
+				emailSet.add(dest);
+			}
 		}
-		
-		// Add to the map
-		Set<String> testSet = nameToEmailsMap.get(name);
-		if(testSet == null){
-			testSet = new TreeSet<String>();
-			nameToEmailsMap.put(name, testSet);
-		}
-		testSet.addAll(emailSet);
-
+		return emailSet;
 	}
 	
 	
-	public Map<String, Set<String>> getEmailMap() {
+	public Set<CmJobEmailDetails> getEmailDetails() {
 
-		Map<String, Set<String>> nameToEmailsMap = new TreeMap<String, Set<String>>();
+		Set<CmJobEmailDetails> emailDetailSet = new TreeSet<CmJobEmailDetails>();
 
 		List<JOBType> jobList = getAllJobs();
+		
 		for (JOBType job : jobList) {
-
-			for (ONType onCondition : job.getON()) {
-
-				for (Object doObject : onCondition.getDOMAILOrDOOrDOCOND()) {
+			
+			CmJobEmailDetails  jobEmailDetails = new CmJobEmailDetails(job.getJOBNAME()); 
+			
+			for (ONType onType : job.getON()) {
+				
+				List<DOMAILType> doMailList = new ArrayList<DOMAILType>();
+				
+				for (Object doObject : onType.getDOMAILOrDOOrDOCOND()) {
 
 					if (doObject instanceof DOMAILType) {
 						DOMAILType doMail = (DOMAILType) doObject;
-						addEntriesForDoMail(job, doMail, nameToEmailsMap);
+						doMailList.add(doMail);
 					}// if doMail
-
+					
 				}// for doAction
-
-			}// for onCondition
-
+				
+				if(doMailList.size() > 0) {
+					Set<String> emailSet = convertDoMailsToEmails(doMailList, job.getAUTOEDIT2());
+					Status status = Status.getStatusByCode(onType.getCODE());
+					if(status == Status.OK) {
+						jobEmailDetails.addAllToSuccessEmails(emailSet);
+					}else {
+						jobEmailDetails.addAllToFailureEmails(emailSet);
+					}
+				}
+				
+			}// for onType
+			
+			emailDetailSet.add(jobEmailDetails);
+			
 		}// for job
 
-		return nameToEmailsMap;
+		return emailDetailSet;
 
 	}
 	
+
 	/* <DEFTABLE>
 	 *   <TABLE>
 	 *     <JOB>
@@ -211,16 +199,34 @@ public class XmlDriver{
 	
 	public static void printAllJobEmails(){
 		XmlDriver driver = new XmlDriver();
-		Map<String, Set<String>> emailMap = driver.getEmailMap();
-    	for(Entry<String, Set<String>> entry : emailMap.entrySet()){
-    		String name = entry.getKey();
-    		Set<String> emails = entry.getValue();
-    		System.out.printf("-------------------------------------------------\n");
-    		System.out.printf("%s\n", name);
-    		for(String email : emails){
-    			System.out.printf("\t%s\n", email);
+		Set<CmJobEmailDetails> emailDetails = driver.getEmailDetails();
+    	for(CmJobEmailDetails detail : emailDetails){
+    		
+    		int successCount = detail.getJobSuccessEmails().size();
+    		int failureCount = detail.getJobFailureEmails().size();
+    		if(successCount + failureCount < 1) {
+    			continue;
     		}
-    	}
+    		
+    		System.out.printf("-------------------------------------------------\n");
+    		System.out.printf("%s\n", detail.getCmName());
+    		
+    		
+    		if (successCount > 0) {
+				System.out.printf("\t%s\n", Status.OK);
+				for (String email : detail.getJobSuccessEmails()) {
+					System.out.printf("\t%s\n", email);
+				}
+			}
+    		
+			if (failureCount > 0) {
+				System.out.printf("\t%s\n", Status.NOTOK);
+				for (String email : detail.getJobFailureEmails()) {
+					System.out.printf("\t%s\n", email);
+				}
+			}
+			
+    	}//for
 	}
 	
 	
