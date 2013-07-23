@@ -213,14 +213,14 @@ public class XmlDriver{
     		
     		
     		if (successCount > 0) {
-				System.out.printf("\t%s\n", Status.OK);
+				System.out.printf("  %s --------------------------------------\n", Status.OK);
 				for (String email : detail.getJobSuccessEmails()) {
 					System.out.printf("\t%s\n", email);
 				}
 			}
     		
 			if (failureCount > 0) {
-				System.out.printf("\t%s\n", Status.NOTOK);
+				System.out.printf("  %s -----------------------------------\n", Status.NOTOK);
 				for (String email : detail.getJobFailureEmails()) {
 					System.out.printf("\t%s\n", email);
 				}
