@@ -38,11 +38,11 @@ public class CmJobEmailDetails implements Comparable<CmJobEmailDetails>{
 	}
 	
 	public void addToFailureEmails(String s) {
-		jobSuccessEmails.add(s);
+		jobFailureEmails.add(s);
 	}
 	
 	public void addAllToFailureEmails(Collection<String> c) {
-		jobSuccessEmails.addAll(c);
+		jobFailureEmails.addAll(c);
 	}
 	
 	public Set<String> getJobSuccessEmails() {
