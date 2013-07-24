@@ -4,4 +4,8 @@
 *.war
 *.ear
 
+# Eclipse auto-compile directory 
 bin
+
+# Exclude decrypted xml
+data/*.xml
