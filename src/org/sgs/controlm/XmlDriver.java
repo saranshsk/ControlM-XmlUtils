@@ -252,11 +252,5 @@ public class XmlDriver{
 		System.out.printf("Total number jobs w/ failure emails: %3d\n", failureCount);
 		System.out.printf("Total number jobs w/ both emails:    %3d\n", bothEmailTypeCount);
 	}
-	
-	
-    public static void main(final String[] args){
-    	XmlDriver.printAllJobEmails();
-    	//XmlDriver.printAllUniqueOnCodes();
-    }
 
 }
