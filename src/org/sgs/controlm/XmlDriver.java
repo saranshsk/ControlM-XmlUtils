@@ -24,7 +24,7 @@ public class XmlDriver{
 	private static final String TOKEN_CHARS = "%%"; // Control-M tokens start with this
 	
 	// Created by decrypting "data/controlm_xml.tgz.gpg"
-	private static final String INPUT_XML_FILE = "data/controlm_prd_2013-07-22.xml";
+	public static final String INPUT_XML_FILE = "data/controlm_prd_2013-07-22.xml";
 	
 	// Some of the Control-M vars apparently have snuck in some mutt arguments --
 	// this set will scrub any of these artifacts away
@@ -38,11 +38,6 @@ public class XmlDriver{
 	private DEFTABLEType tables;
 	
 	
-	
-	public XmlDriver(){
-		this(INPUT_XML_FILE);
-	}
-	
 	public XmlDriver(String filePath){
 		unmarshallTables(filePath);
 	}
@@ -51,7 +46,7 @@ public class XmlDriver{
 	
 	private void unmarshallTables(String filePath){
         
-		File file = FileUtils.getFile(INPUT_XML_FILE);
+		File file = FileUtils.getFile(filePath);
 
         try{
             JAXBContext jaxbContext = JAXBContext.newInstance(DEFTABLEType.class);
@@ -175,9 +170,9 @@ public class XmlDriver{
 	 *   </TABLE>
 	 * <DEFTABLE>
 	 */
-	public static void printAllUniqueOnCodes(){
-		XmlDriver driver = new XmlDriver();
-		List<JOBType> allJobs = driver.getAllJobs();
+	public void printAllUniqueOnCodes(){
+		
+		List<JOBType> allJobs = getAllJobs();
     	Set<String> allMailCodes = new TreeSet<String>(); 
     	for(JOBType job : allJobs){
     		for(ONType on : job.getON()){
@@ -197,9 +192,9 @@ public class XmlDriver{
 	}
 	
 	
-	public static void printAllJobEmails(){
-		XmlDriver driver = new XmlDriver();
-		Set<CmJobEmailDetails> emailDetails = driver.getEmailDetails();
+	public void printAllJobEmails(){
+
+		Set<CmJobEmailDetails> emailDetails = getEmailDetails();
     	for(CmJobEmailDetails detail : emailDetails){
     		
     		int successCount = detail.getJobSuccessEmails().size();
@@ -231,8 +226,9 @@ public class XmlDriver{
 	
 	
     public static void main(final String[] args){
-    	XmlDriver.printAllJobEmails();
-    	//XmlDriver.printAllUniqueOnCodes();
+    	XmlDriver driver = new XmlDriver(XmlDriver.INPUT_XML_FILE);
+    	driver.printAllJobEmails();
+    	driver.printAllUniqueOnCodes();
     }
 
 }

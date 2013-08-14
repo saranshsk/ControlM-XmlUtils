@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project name="ControlM-XmlUtils" basedir="." default="compile">
+
+	<property name="src.dir" location="src" />
+	<property name="bin.dir" location="bin" />
+	<property name="lib.dir" location="lib" />
+
+	<target name="compile" description="Compile all source code.">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" fork="true" verbose="true" includeantruntime="false" />
+	</target>
+
+	<target name="clean" description="Clean out filtered configs, built jars, copied source, and compiled code">
+		<delete dir="${bin.dir}/src" failonerror="false" verbose="true" />
+		<delete failonerror="false" verbose="true">
+			<fileset dir="${bin.dir}" includes="*.properties,*.xml" />
+		</delete>
+	</target>
+
+	<target name="echo_properties" description="Print all build properties that have been set">
+		<echoproperties />
+	</target>
+	
+	<target name="build_jar" description="Create a jar for use in other projects." depends="clean,compile">
+		<!-- Copy source into packed with jar -->
+		<mkdir dir="${bin.dir}/src" />
+		<copy toDir="${bin.dir}/src" overwrite="true" verbose="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<jar destfile="controlm-xmlutils.jar">
+			<fileset dir="${bin.dir}">
+				<include name="**/*" />
+			</fileset>
+		</jar>
+	</target>
+
+</project>
