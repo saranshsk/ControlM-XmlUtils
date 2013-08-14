@@ -2,30 +2,31 @@ package org.sgs.controlm;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public enum Status {
 	
 	OK("OK"),
 	NOTOK("NOTOK");
 	
-	private static final Set<Pattern> OK_PATTERNS;
-	private static final Set<Pattern> NOTOK_PATTERNS;
+	private static final Set<String> OK_CODES;
+	private static final Set<String> NOTOK_CODES;
 	static{
-		OK_PATTERNS = new HashSet<Pattern>();		
-		OK_PATTERNS.add(Pattern.compile(".*<result>true.*"));
-		OK_PATTERNS.add(Pattern.compile(".*Percent: 100  status: Ended OK.*"));
-		OK_PATTERNS.add(Pattern.compile("OK"));
-
-		NOTOK_PATTERNS = new HashSet<Pattern>();		
-		NOTOK_PATTERNS.add(Pattern.compile("NOTOK"));
-		NOTOK_PATTERNS.add(Pattern.compile("RUNCOUNT = .*"));
-		NOTOK_PATTERNS.add(Pattern.compile(".*soap:Fault.*"));
-		NOTOK_PATTERNS.add(Pattern.compile(".*failed.*"));
-		NOTOK_PATTERNS.add(Pattern.compile(".*Time Limit for file watching was exceeded.*"));
-		NOTOK_PATTERNS.add(Pattern.compile(".*File does not exist.*"));
-		NOTOK_PATTERNS.add(Pattern.compile(".*<result>false.*"));
+		OK_CODES = new HashSet<String>();		
+		OK_CODES.add("*<result>true*");
+		OK_CODES.add("*Percent: 100  status: Ended OK*");
+		OK_CODES.add("OK");
+		OK_CODES.add("*File does not exist*");
+		
+		NOTOK_CODES = new HashSet<String>();		
+		NOTOK_CODES.add("NOTOK");
+		NOTOK_CODES.add("*soap:Fault*");
+		NOTOK_CODES.add("*failed*");
+		NOTOK_CODES.add("*Time Limit for file watching was exceeded*");
+		NOTOK_CODES.add("*<result>false*");
+		NOTOK_CODES.add("RUNCOUNT = 12");
+		NOTOK_CODES.add("RUNCOUNT = 40");
+		NOTOK_CODES.add("RUNCOUNT = 60");
+		NOTOK_CODES.add("RUNCOUNT = 8");
 	}
 	
 	
@@ -39,19 +40,17 @@ public enum Status {
 		return name;
 	}
 	
-	public static Status getStatusByCode(String code){
-		for(Pattern pattern : OK_PATTERNS){
-			Matcher matcher = pattern.matcher(code);
-			if(matcher.matches()){
+	public static Status getStatusByCode(String otherCode){
+		for(String code : OK_CODES){
+			if(code.equals(otherCode)){
 				return Status.OK;
 			}
 		}
-		for(Pattern pattern : NOTOK_PATTERNS){
-			Matcher matcher = pattern.matcher(code);
-			if(matcher.matches()){
+		for(String code : NOTOK_CODES){
+			if(code.equals(otherCode)){
 				return Status.NOTOK;
 			}
 		}
-		throw new RuntimeException(String.format("No Status found for unknown code: '%s'", code));
+		throw new RuntimeException(String.format("No Status found for unknown code: '%s'", otherCode));
 	}
 }

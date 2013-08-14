@@ -4,7 +4,12 @@
 *.war
 *.ear
 
+# Eclipse auto-compile directory 
 bin
 
+<<<<<<< HEAD
 # Ignore decrypted data files
+=======
+# Exclude decrypted xml
+>>>>>>> 0d6b13efd5dcfc00844c6bd39636d469de6a57c1
 data/*.xml
