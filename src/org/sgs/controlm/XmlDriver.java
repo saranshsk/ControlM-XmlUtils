@@ -192,14 +192,10 @@ public class XmlDriver{
 	}
 	
 	
-<<<<<<< HEAD
+
 	public void printAllJobEmails(){
 
 		Set<CmJobEmailDetails> emailDetails = getEmailDetails();
-=======
-	public static void printAllJobEmails(){
-		XmlDriver driver = new XmlDriver();
-		Set<CmJobEmailDetails> emailDetails = driver.getEmailDetails();
 		
 		// Control stdout reporting, only print if there is non-zero info available.
 		// Also, keep counts to report on stats.
@@ -208,7 +204,6 @@ public class XmlDriver{
 		int totalJobCount = 0;
 		int bothEmailTypeCount = 0;
 		
->>>>>>> 0d6b13efd5dcfc00844c6bd39636d469de6a57c1
     	for(CmJobEmailDetails detail : emailDetails){
     		
     		// For stat purposes, we only care that a job sends email,
@@ -253,7 +248,7 @@ public class XmlDriver{
 		System.out.printf("Total number jobs w/ failure emails: %3d\n", failureCount);
 		System.out.printf("Total number jobs w/ both emails:    %3d\n", bothEmailTypeCount);
 	}
-<<<<<<< HEAD
+
 	
 	
     public static void main(final String[] args){
@@ -261,7 +256,6 @@ public class XmlDriver{
     	driver.printAllJobEmails();
     	driver.printAllUniqueOnCodes();
     }
-=======
->>>>>>> 0d6b13efd5dcfc00844c6bd39636d469de6a57c1
+
 
 }
